@@ -5,8 +5,7 @@ package com.trevore
  */
 object Main {
   def main(args: Array[String]): Unit = {
-    val day2 = new Day2()
-    day2.foldLeftStringArrayTotalSize()
-    day2.censureWords()
+    val boggle: Boggle = new Boggle
+    boggle.solve()
   }
 }

@@ -15,8 +15,8 @@ class Boggle {
     "BOGGLE"
   )
 
-  private val MAX_WORD_SIZE = 6;
-  private val MAX_BOARD_INDEX = 3;
+  private val MAX_WORD_SIZE = wordsToFind.maxBy(item => item.length).length;
+  private val MAX_BOARD_INDEX = board.length - 1;
   private val MIN_BOARD_INDEX = 0;
 
   def solve() = {
@@ -29,12 +29,10 @@ class Boggle {
   }
 
   def permute(x: Int, y: Int, word: String, path: List[(Int, Int)]) : Unit = {
-    if (word.length() > MAX_WORD_SIZE) return
-
-    if (x+1 <= MAX_BOARD_INDEX && !path.contains((x+1, y))) permute(x+1, y, word + board(x+1)(y), path :+ (x+1, y))
-    if (x-1 >= MIN_BOARD_INDEX && !path.contains((x-1, y))) permute(x-1, y, word + board(x-1)(y), path :+ (x-1, y))
-    if (y+1 <= MAX_BOARD_INDEX && !path.contains((x, y+1))) permute(x, y+1, word + board(x)(y+1), path :+ (x, y+1))
-    if (y-1 >= MIN_BOARD_INDEX && !path.contains((x, y-1))) permute(x, y-1, word + board(x)(y-1), path :+ (x, y-1))
+    permuteIfValid(x+1, y, word, path)
+    permuteIfValid(x-1, y, word, path)
+    permuteIfValid(x, y+1, word, path)
+    permuteIfValid(x, y-1, word, path)
 
     if (wordsToFind.contains(word)) {
       println("Found " + word)
@@ -43,4 +41,13 @@ class Boggle {
     }
   }
 
+  def permuteIfValid(x: Int, y: Int, word: String, path: List[(Int, Int)]) : Unit = {
+    if (isInBoardBounds(x, y) && !path.contains((x, y)) && word.length() <= MAX_WORD_SIZE)
+      permute(x, y, word + board(x)(y), path :+(x, y))
+  }
+
+  def isInBoardBounds(x: Int, y: Int) : Boolean = {
+    return x <= MAX_BOARD_INDEX && x >= 0 &&
+      y <= MAX_BOARD_INDEX && y >= 0;
+  }
 }

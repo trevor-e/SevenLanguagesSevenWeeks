@@ -4,7 +4,6 @@
 %%% @doc
 %%%
 %%% @end
-%%% Created : 13. Apr 2015 10:59 PM
 %%%-------------------------------------------------------------------
 -module(day1).
 -author("trevor").
@@ -15,7 +14,7 @@
 
 run() -> io:write(count_words("This is a list of words")),
   io:nl(),
-  io:write(count_to_ten(0)),
+  count_to_ten(0),
   io:nl(),
   selective_print({error, hello}),
   selective_print(success).
